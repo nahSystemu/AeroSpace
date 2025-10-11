@@ -17,8 +17,8 @@ public struct MoveMouseCmdArgs: CmdArgs {
     /*conforms*/ public var workspaceName: WorkspaceName?
 }
 
-func parseMouseTarget(arg: String, nextArgs: inout [String]) -> Parsed<MouseTarget> {
-    parseEnum(arg, MouseTarget.self)
+func parseMouseTarget(i: ArgParserInput) -> ParsedCliArgs<MouseTarget> {
+    i.consumeOneArg { arg in parseEnum(arg, MouseTarget.self) }
 }
 
 public func parseMoveMouseCmdArgs(_ args: StrArrSlice) -> ParsedCmd<MoveMouseCmdArgs> {
