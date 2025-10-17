@@ -44,7 +44,10 @@ private func resizeWithMouse(_ window: Window) async throws { // todo cover with
         case .workspace, .macosMinimizedWindowsContainer, .macosFullscreenWindowsContainer,
              .macosPopupWindowsContainer, .macosHiddenAppsWindowsContainer:
             return // Nothing to do for floating, or unconventional windows
-        case .tilingContainer:
+        case .tilingContainer(let container):
+            if container.layout == .hyprland {
+                return
+            }
             guard let rect = try await window.getAxRect() else { return }
             guard let lastAppliedLayoutRect = window.lastAppliedLayoutPhysicalRect else { return }
             let (lParent, lOwnIndex) = window.closestParent(hasChildrenInDirection: .left, withLayout: .tiles) ?? (nil, nil)
@@ -57,19 +60,19 @@ private func resizeWithMouse(_ window: Window) async throws { // todo cover with
                 (lastAppliedLayoutRect.minY - rect.minY, uParent, 0,                        uOwnIndex),               // Vertical, to the up of the window
                 (rect.maxX - lastAppliedLayoutRect.maxX, rParent, rOwnIndex.map { $0 + 1 }, rParent?.children.count), // Horizontal, to the right of the window
             ]
-            for (diff, parent, startIndex, pastTheEndIndex) in table {
-                if let parent, let startIndex, let pastTheEndIndex, pastTheEndIndex - startIndex > 0 && abs(diff) > 5 { // 5 pixels should be enough to fight with accumulated floating precision error
+            for (diff, siblingContainer, startIndex, pastTheEndIndex) in table {
+                if let siblingContainer, let startIndex, let pastTheEndIndex, pastTheEndIndex - startIndex > 0 && abs(diff) > 5 { // 5 pixels should be enough to fight with accumulated floating precision error
                     let siblingDiff = diff.div(pastTheEndIndex - startIndex).orDie()
-                    let orientation = parent.orientation
+                    let orientation = siblingContainer.orientation
 
                     window.parentsWithSelf.lazy
-                        .prefix(while: { $0 != parent })
+                        .prefix(while: { $0 != siblingContainer })
                         .filter {
                             let parent = $0.parent as? TilingContainer
                             return parent?.orientation == orientation && parent?.layout == .tiles
                         }
                         .forEach { $0.setWeight(orientation, $0.getWeightBeforeResize(orientation) + diff) }
-                    for sibling in parent.children[startIndex ..< pastTheEndIndex] {
+                    for sibling in siblingContainer.children[startIndex ..< pastTheEndIndex] {
                         sibling.setWeight(orientation, sibling.getWeightBeforeResize(orientation) - siblingDiff)
                     }
                 }

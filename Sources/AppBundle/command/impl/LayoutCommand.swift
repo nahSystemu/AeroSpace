@@ -22,6 +22,8 @@ struct LayoutCommand: Command {
                 return changeTilingLayout(io, targetLayout: .tiles, targetOrientation: .h, window: window)
             case .v_tiles:
                 return changeTilingLayout(io, targetLayout: .tiles, targetOrientation: .v, window: window)
+            case .hyprland:
+                return changeTilingLayout(io, targetLayout: .hyprland, targetOrientation: nil, window: window)
             case .accordion:
                 return changeTilingLayout(io, targetLayout: .accordion, targetOrientation: nil, window: window)
             case .tiles:
@@ -72,6 +74,7 @@ extension Window {
     fileprivate func matchesDescription(_ layout: LayoutCmdArgs.LayoutDescription) -> Bool {
         return switch layout {
             case .accordion:   (parent as? TilingContainer)?.layout == .accordion
+            case .hyprland:    (parent as? TilingContainer)?.layout == .hyprland
             case .tiles:       (parent as? TilingContainer)?.layout == .tiles
             case .horizontal:  (parent as? TilingContainer)?.orientation == .h
             case .vertical:    (parent as? TilingContainer)?.orientation == .v

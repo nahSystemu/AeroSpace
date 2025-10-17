@@ -124,9 +124,11 @@ public struct Message: Hashable, Equatable {
     }
 }
 
+#if canImport(PreviewsMacros)
 #Preview {
     MessageView(model: MessageModel.shared)
         .onAppear {
             MessageModel.shared.message = Message(type: .config, description: "Description", body: "Body")
         }
 }
+#endif

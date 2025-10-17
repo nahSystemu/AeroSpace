@@ -229,7 +229,7 @@ WARNING: i3 has a different terminology.
 * Each container can contain arbitrary number of children nodes
 * Windows are the only possible leaf nodes. Windows contain zero children nodes
 * Every container has two properties:
-. <<layouts,Layout>> (Possible values: `tiles`, `accordion`)
+. <<layouts,Layout>> (Possible values: `tiles`, `accordion`, `hyprland`)
 . Orientation (Possible values: `horizontal`, `vertical`)
 
 When we say "layout of the window", we refer to the layout of the window’s parent container.
@@ -256,12 +256,13 @@ The tree structure can be changed with three commands:
 [#layouts]
 === Layouts
 
-In total, AeroSpace provides 4 possible layouts:
+In total, AeroSpace provides 5 possible layouts:
 
 - `h_tiles` horizontal tiles (in i3, it’s called "horizontal split")
 - `v_tiles` vertical tiles (in i3, it’s called "vertical split")
 - `h_accordion` horizontal accordion (analog of i3’s "tabbed layout")
 - `v_accordion` vertical accordion (analog of i3’s "stacked layout")
+- `hyprland` Hyprland-inspired dwindle layout that alternates split orientation on each depth
 
 <<tree,From the previous section>>, you’re already familiar with the `tiles` layout.
 
@@ -282,6 +283,8 @@ You can navigate the windows in an `h_accordion` by using the `focus (left|right
 While in a `v_accordion`, you can navigate the windows using the `focus (up|down)` command.
 
 Accordion padding is configurable via `accordion-padding` option.
+
+The `hyprland` layout alternates the split orientation while traversing the container’s children, producing a dwindle spiral. The initial split orientation always comes from the container orientation (`horizontal` or `vertical`). Each split assigns the leading region approximately 62% of the space and hands the remaining area to the rest of the stack, so adding new windows creates the characteristic shrinking spiral. Mouse-based resizing is disabled for `hyprland` containers at the moment; use layout or move commands to reorganize windows.
 
 [#normalization]
 === Normalization

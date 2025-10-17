@@ -1,4 +1,5 @@
 import AppKit
+import Common
 
 extension Workspace {
     @MainActor
@@ -41,12 +42,14 @@ extension TreeNode {
             case .tilingContainer(let container):
                 lastAppliedLayoutPhysicalRect = physicalRect
                 lastAppliedLayoutVirtualRect = virtual
-                switch container.layout {
-                    case .tiles:
-                        try await container.layoutTiles(point, width: width, height: height, virtual: virtual, context)
-                    case .accordion:
-                        try await container.layoutAccordion(point, width: width, height: height, virtual: virtual, context)
-                }
+                try await container.layout.strategy.layout(
+                    container: container,
+                    at: point,
+                    width: width,
+                    height: height,
+                    virtual: virtual,
+                    context: context
+                )
             case .macosMinimizedWindowsContainer, .macosFullscreenWindowsContainer,
                  .macosPopupWindowsContainer, .macosHiddenAppsWindowsContainer:
                 return // Nothing to do for weirdos
@@ -54,7 +57,7 @@ extension TreeNode {
     }
 }
 
-private struct LayoutContext {
+struct LayoutContext {
     let workspace: Workspace
     let resolvedGaps: ResolvedGaps
 
@@ -97,7 +100,7 @@ extension Window {
 
 extension TilingContainer {
     @MainActor
-    fileprivate func layoutTiles(_ point: CGPoint, width: CGFloat, height: CGFloat, virtual: Rect, _ context: LayoutContext) async throws {
+    func layoutTiles(_ point: CGPoint, width: CGFloat, height: CGFloat, virtual: Rect, _ context: LayoutContext) async throws {
         var point = point
         var virtualPoint = virtual.topLeftCorner
 
@@ -132,7 +135,7 @@ extension TilingContainer {
     }
 
     @MainActor
-    fileprivate func layoutAccordion(_ point: CGPoint, width: CGFloat, height: CGFloat, virtual: Rect, _ context: LayoutContext) async throws {
+    func layoutAccordion(_ point: CGPoint, width: CGFloat, height: CGFloat, virtual: Rect, _ context: LayoutContext) async throws {
         guard let mruIndex: Int = mostRecentChild?.ownIndex else { return }
         for (index, child) in children.enumerated() {
             let padding = CGFloat(config.accordionPadding)
@@ -162,6 +165,210 @@ extension TilingContainer {
                         context,
                     )
             }
+            }
+    }
+}
+
+extension TilingContainer {
+    @MainActor
+    func layoutHyprland(_ point: CGPoint, width: CGFloat, height: CGFloat, virtual: Rect, _ context: LayoutContext) async throws {
+        let rect = Rect(topLeftX: point.x, topLeftY: point.y, width: width, height: height)
+        try await hyprlandLayout(
+            childrenSlice: children[...],
+            rect: rect,
+            virtualRect: virtual,
+            orientation: orientation,
+            context: context
+        )
+    }
+
+    @MainActor
+    private func hyprlandLayout(
+        childrenSlice: ArraySlice<TreeNode>,
+        rect: Rect,
+        virtualRect: Rect,
+        orientation: Orientation,
+        context: LayoutContext
+    ) async throws {
+        guard let first = childrenSlice.first else { return }
+
+        if childrenSlice.count == 1 {
+            try await first.layoutRecursive(
+                rect.topLeftCorner,
+                width: rect.width,
+                height: rect.height,
+                virtual: virtualRect,
+                context
+            )
+            return
+        }
+
+        let restSlice = childrenSlice.dropFirst()
+        let gap = restSlice.isEmpty ? CGFloat.zero : CGFloat(context.resolvedGaps.inner.get(orientation).toDouble())
+        let primaryRatio = hyprlandPrimarySplitRatio
+
+        switch orientation {
+            case .h:
+                try await hyprlandSplitAlongHorizontal(
+                    first: first,
+                    restSlice: restSlice,
+                    rect: rect,
+                    virtualRect: virtualRect,
+                    gap: gap,
+                    ratio: primaryRatio,
+                    nextOrientation: orientation.opposite,
+                    context: context
+                )
+            case .v:
+                try await hyprlandSplitAlongVertical(
+                    first: first,
+                    restSlice: restSlice,
+                    rect: rect,
+                    virtualRect: virtualRect,
+                    gap: gap,
+                    ratio: primaryRatio,
+                    nextOrientation: orientation.opposite,
+                    context: context
+                )
         }
     }
+
+    @MainActor
+    private func hyprlandSplitAlongHorizontal(
+        first: TreeNode,
+        restSlice: ArraySlice<TreeNode>,
+        rect: Rect,
+        virtualRect: Rect,
+        gap: CGFloat,
+        ratio: CGFloat,
+        nextOrientation: Orientation,
+        context: LayoutContext
+    ) async throws {
+        let hasRest = !restSlice.isEmpty
+        let gapToUse = hasRest && rect.width > gap ? gap : 0
+        let availableWidth = max(0, rect.width - gapToUse)
+        let clampedRatio = clampHyprlandRatio(ratio)
+        let firstWidth = hasRest ? availableWidth * clampedRatio : rect.width
+        let restWidth = hasRest ? max(0, availableWidth - firstWidth) : 0
+
+        // Physical rectangles
+        let firstRect = Rect(
+            topLeftX: rect.topLeftX,
+            topLeftY: rect.topLeftY,
+            width: firstWidth,
+            height: rect.height
+        )
+        let restRect = Rect(
+            topLeftX: rect.topLeftX + firstWidth + (hasRest ? gapToUse : 0),
+            topLeftY: rect.topLeftY,
+            width: restWidth,
+            height: rect.height
+        )
+
+        // Virtual rectangles
+        let firstVirtualWidth = hasRest ? virtualRect.width * clampedRatio : virtualRect.width
+        let restVirtualWidth = hasRest ? max(0, virtualRect.width - firstVirtualWidth) : 0
+        let firstVirtual = Rect(
+            topLeftX: virtualRect.topLeftX,
+            topLeftY: virtualRect.topLeftY,
+            width: firstVirtualWidth,
+            height: virtualRect.height
+        )
+        let restVirtual = Rect(
+            topLeftX: virtualRect.topLeftX + firstVirtualWidth,
+            topLeftY: virtualRect.topLeftY,
+            width: restVirtualWidth,
+            height: virtualRect.height
+        )
+
+        try await first.layoutRecursive(
+            firstRect.topLeftCorner,
+            width: firstRect.width,
+            height: firstRect.height,
+            virtual: firstVirtual,
+            context
+        )
+
+        if hasRest {
+            try await hyprlandLayout(
+                childrenSlice: restSlice,
+                rect: restRect,
+                virtualRect: restVirtual,
+                orientation: nextOrientation,
+                context: context
+            )
+        }
+    }
+
+    @MainActor
+    private func hyprlandSplitAlongVertical(
+        first: TreeNode,
+        restSlice: ArraySlice<TreeNode>,
+        rect: Rect,
+        virtualRect: Rect,
+        gap: CGFloat,
+        ratio: CGFloat,
+        nextOrientation: Orientation,
+        context: LayoutContext
+    ) async throws {
+        let hasRest = !restSlice.isEmpty
+        let gapToUse = hasRest && rect.height > gap ? gap : 0
+        let availableHeight = max(0, rect.height - gapToUse)
+        let clampedRatio = clampHyprlandRatio(ratio)
+        let firstHeight = hasRest ? availableHeight * clampedRatio : rect.height
+        let restHeight = hasRest ? max(0, availableHeight - firstHeight) : 0
+
+        let firstRect = Rect(
+            topLeftX: rect.topLeftX,
+            topLeftY: rect.topLeftY,
+            width: rect.width,
+            height: firstHeight
+        )
+        let restRect = Rect(
+            topLeftX: rect.topLeftX,
+            topLeftY: rect.topLeftY + firstHeight + (hasRest ? gapToUse : 0),
+            width: rect.width,
+            height: restHeight
+        )
+
+        let firstVirtualHeight = hasRest ? virtualRect.height * clampedRatio : virtualRect.height
+        let restVirtualHeight = hasRest ? max(0, virtualRect.height - firstVirtualHeight) : 0
+        let firstVirtual = Rect(
+            topLeftX: virtualRect.topLeftX,
+            topLeftY: virtualRect.topLeftY,
+            width: virtualRect.width,
+            height: firstVirtualHeight
+        )
+        let restVirtual = Rect(
+            topLeftX: virtualRect.topLeftX,
+            topLeftY: virtualRect.topLeftY + firstVirtualHeight,
+            width: virtualRect.width,
+            height: restVirtualHeight
+        )
+
+        try await first.layoutRecursive(
+            firstRect.topLeftCorner,
+            width: firstRect.width,
+            height: firstRect.height,
+            virtual: firstVirtual,
+            context
+        )
+
+        if hasRest {
+            try await hyprlandLayout(
+                childrenSlice: restSlice,
+                rect: restRect,
+                virtualRect: restVirtual,
+                orientation: nextOrientation,
+                context: context
+            )
+        }
+    }
+}
+
+private let hyprlandPrimarySplitRatio = CGFloat(0.61803398875) // golden ratio inspired default
+private let hyprlandRatioBounds: ClosedRange<CGFloat> = 0.1 ... 0.9
+
+private func clampHyprlandRatio(_ value: CGFloat) -> CGFloat {
+    min(max(value, hyprlandRatioBounds.lowerBound), hyprlandRatioBounds.upperBound)
 }

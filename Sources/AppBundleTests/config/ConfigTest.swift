@@ -170,6 +170,17 @@ final class ConfigTest: XCTestCase {
         }
     }
 
+    func testParseHyprlandLayout() {
+        let command = parseCommand("layout hyprland tiles").cmdOrNil
+        XCTAssertTrue(command is LayoutCommand)
+        assertEquals((command as! LayoutCommand).args.toggleBetween.val, [.hyprland, .tiles])
+
+        guard case .help = parseCommand("layout hyprland -h") else {
+            XCTFail()
+            return
+        }
+    }
+
     func testSplitCommandAndFlattenContainersNormalization() {
         let (_, errors) = parseConfig(
             """

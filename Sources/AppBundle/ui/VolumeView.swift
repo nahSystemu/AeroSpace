@@ -77,6 +77,8 @@ struct VolumeView: View {
     }
 }
 
+#if canImport(PreviewsMacros)
 #Preview {
     VolumeView(volume: 0.5).padding()
 }
+#endif

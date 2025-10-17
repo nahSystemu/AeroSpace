@@ -81,7 +81,9 @@ struct SecureInputView: View {
     }
 }
 
+#if canImport(PreviewsMacros)
 #Preview {
     SecureInputView()
         .frame(width: 500, height: 120)
 }
+#endif

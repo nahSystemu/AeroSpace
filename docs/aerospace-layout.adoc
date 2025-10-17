@@ -10,7 +10,7 @@ include::util/man-attributes.adoc[]
 [verse]
 // tag::synopsis[]
 aerospace layout [-h|--help] [--window-id <window-id>]
-                 (h_tiles|v_tiles|h_accordion|v_accordion|tiles|accordion|horizontal|vertical|tiling|floating)...
+                 (h_tiles|v_tiles|h_accordion|v_accordion|tiles|accordion|hyprland|horizontal|vertical|tiling|floating)...
 
 // end::synopsis[]
 
@@ -23,9 +23,10 @@ aerospace layout [-h|--help] [--window-id <window-id>]
 If several arguments are supplied then finds the first argument that doesn't describe the currently active layout, and applies the layout.
 
 * Change both tiling layout and orientation in one go: `h_tiles|v_tiles|h_accordion|v_accordion`
-* Change tiling layout but preserve orientation: `tiles|accordion`
+* Change tiling layout but preserve orientation: `tiles|accordion|hyprland`
 * Change orientation but preserve layout: `horizontal|vertical`
 * Toggle floating/tiling mode: `tiling|floating`
+* Toggle between `hyprland` and another tiling layout: `hyprland|tiles`
 
 // =========================================================== Options
 include::./util/conditional-options-header.adoc[]
@@ -44,8 +45,11 @@ include::util/conditional-examples-header.adoc[]
 * Toggle orientation (order of args doesn't matter): +
 `aerospace layout horizontal vertical`
 
-* Toggle between `tiles` and `accordion` layouts (order of args doesn't matter): +
-`aerospace layout tiles accordion`
+* Toggle between `tiles`, `accordion`, and `hyprland` layouts (order of args doesn't matter): +
+`aerospace layout tiles accordion hyprland`
+
+* Switch to the Hyprland-inspired dwindle layout while preserving orientation: +
+`aerospace layout hyprland horizontal vertical`
 
 * Switch to `tiles` layout. Toggle the layout orientation if already in `tiles` layout: +
 `aerospace layout tiles horizontal vertical`
