@@ -19,8 +19,8 @@ build-site() {
     cp ./docs/index.html ./.site
 
     cd .site
-        # Delete "aerospace " prefifx in synopsis
-        sed -E -i '' '/tag::synopsis/, /end::synopsis/ s/^(aerospace | {10})//' aerospace*
+        # Delete "hyprspace " prefifx in synopsis
+        sed -E -i '' '/tag::synopsis/, /end::synopsis/ s/^(hyprspace | {10})//' hyprspace*
         bundler exec asciidoctor ./guide.adoc ./commands.adoc ./goodies.adoc
         cp goodies.html goodness.html # backwards compatibility
         rm -rf ./*.adoc
@@ -35,7 +35,7 @@ build-site() {
 build-man() {
     cp-docs .man
     cd .man
-        bundler exec asciidoctor -b manpage aerospace*.adoc
+        bundler exec asciidoctor -b manpage hyprspace*.adoc
         rm -rf -- *.adoc
     cd - > /dev/null
 }

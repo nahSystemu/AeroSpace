@@ -5,7 +5,7 @@ import Socket
 
 let usage =
     """
-    USAGE: \(CommandLine.arguments.first ?? "aerospace") [-h|--help] [-v|--version] <subcommand> [<args>...]
+    USAGE: \(CommandLine.arguments.first ?? "hyprspace") [-h|--help] [-v|--version] <subcommand> [<args>...]
 
     SUBCOMMANDS:
     \(subcommandDescriptions.sortedBy { $0[0] }.toPaddingTable(columnSeparator: "   ").joined(separator: "\n"))
@@ -50,7 +50,7 @@ struct Main {
             if isVersion {
                 printVersionAndExit(serverVersion: nil)
             } else {
-                cliError("Can't connect to AeroSpace server. Is AeroSpace.app running?\n\(e.localizedDescription)")
+                cliError("Can't connect to HyprSpace server. Is HyprSpace.app running?\n\(e.localizedDescription)")
             }
         }
 
@@ -61,10 +61,10 @@ struct Main {
             {
                 cliError(
                     """
-                    ERROR: Implicit stdin is detected (stdin is not TTY). Implicit stdin was forbidden in AeroSpace v0.20.0.
-                    1. Please supply '--stdin' flag to make stdin explicit and preserve old AeroSpace behavior
+                    ERROR: Implicit stdin is detected (stdin is not TTY). Implicit stdin was forbidden in HyprSpace v0.20.0.
+                    1. Please supply '--stdin' flag to make stdin explicit and preserve old HyprSpace behavior
                     2. You can also use '--no-stdin' flag to behave as if no stdin was supplied
-                    Breaking change issue: https://github.com/nikitabobko/AeroSpace/issues/1683
+                    Breaking change issue: https://github.com/nikitabobko/HyprSpace/issues/1683
                     """,
                 )
             }
@@ -88,12 +88,12 @@ struct Main {
         if ans.exitCode != 0 && ans.serverVersionAndHash != cliClientVersionAndHash {
             printStderr(
                 """
-                Warning: AeroSpace client/server versions don't match
-                    - aerospace CLI client version: \(cliClientVersionAndHash)
-                    - AeroSpace.app server version: \(ans.serverVersionAndHash)
+                Warning: HyprSpace client/server versions don't match
+                    - hyprspace CLI client version: \(cliClientVersionAndHash)
+                    - HyprSpace.app server version: \(ans.serverVersionAndHash)
                     Possible fixes:
-                    - Restart AeroSpace.app (server restart is required after each update)
-                    - Reinstall and restart AeroSpace (corrupted installation)
+                    - Restart HyprSpace.app (server restart is required after each update)
+                    - Reinstall and restart HyprSpace (corrupted installation)
                 """,
             )
         }
@@ -104,8 +104,8 @@ struct Main {
 func printVersionAndExit(serverVersion: String?) -> Never {
     print(
         """
-        aerospace CLI client version: \(cliClientVersionAndHash)
-        AeroSpace.app server version: \(serverVersion ?? "Unknown. The server is not running")
+        hyprspace CLI client version: \(cliClientVersionAndHash)
+        HyprSpace.app server version: \(serverVersion ?? "Unknown. The server is not running")
         """,
     )
     exit(0)

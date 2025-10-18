@@ -50,13 +50,13 @@ struct ServerArgs: Sendable {
 }
 
 private let serverHelp = """
-    USAGE: \(CommandLine.arguments.first ?? "AeroSpace.app/Contents/MacOS/AeroSpace") [<options>]
+    USAGE: \(CommandLine.arguments.first ?? "HyprSpace.app/Contents/MacOS/HyprSpace") [<options>]
 
     OPTIONS:
       -h, --help              Print help
-      -v, --version           Print AeroSpace.app version
-      --config-path <path>    Config path. It will take priority over ~/.aerospace.toml
-                              and ${XDG_CONFIG_HOME}/aerospace/aerospace.toml
+      -v, --version           Print HyprSpace.app version
+      --config-path <path>    Config path. It will take priority over ~/.hyprspace.toml
+                              and ${XDG_CONFIG_HOME}/hyprspace/hyprspace.toml
       --read-only             Disable window management.
                               Useful if you want to use only debug-windows or other query commands.
     """

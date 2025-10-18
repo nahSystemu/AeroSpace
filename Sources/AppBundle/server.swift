@@ -28,8 +28,8 @@ func toggleReleaseServerIfDebug(_ state: EnableCmdArgs.State) {
     defer {
         socket.close()
     }
-    let socketFile = "/tmp/bobko.aerospace-\(unixUserName).sock"
-    if (try? socket.connect(to: socketFile)) == nil { // Can't connect, AeroSpace.app is not running
+    let socketFile = "/tmp/bobko.hyprspace-\(unixUserName).sock"
+    if (try? socket.connect(to: socketFile)) == nil { // Can't connect, HyprSpace.app is not running
         return
     }
 
@@ -74,7 +74,7 @@ private func newConnection(_ socket: Socket) async { // todo add exit codes
             answerToClient(
                 exitCode: 1,
                 stderr: "\(aeroSpaceAppName) server is disabled and doesn't accept commands. " +
-                    "You can use 'aerospace enable on' to enable the server",
+                    "You can use 'hyprspace enable on' to enable the server",
             )
             continue
         }
@@ -93,7 +93,7 @@ private func newConnection(_ socket: Socket) async { // todo add exit codes
         if let command {
             let _answer: Result<ServerAnswer, Error> = await Task { @MainActor in
                 try await runSession(.socketServer, token) { () throws in
-                    let cmdResult = try await command.run(.defaultEnv, CmdStdin(request.stdin)) // todo pass AEROSPACE_ env vars from CLI instead of defaultEnv
+                    let cmdResult = try await command.run(.defaultEnv, CmdStdin(request.stdin)) // todo pass HYPRSPACE_ env vars from CLI instead of defaultEnv
                     return ServerAnswer(
                         exitCode: cmdResult.exitCode,
                         stdout: cmdResult.stdout.joined(separator: "\n"),

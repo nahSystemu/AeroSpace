@@ -1,0 +1,24 @@
+= hyprspace(1)
+include::util/man-attributes.adoc[]
+:manname: hyprspace
+:manpurpose: i3-like tiling window manager for macOS
+
+== Synopsis
+[verse]
+hyprspace [-h|--help] [-v|--version] <subcommand> [<subcommand-options>...] [<subcommand-arguments>...]
+
+== Description
+
+HyprSpace is an i3-like tiling window manager for macOS
+
+*hyprspace* command line program is used to manipulate HyprSpace and query its state.
+
+See https://nikitabobko.github.io/HyprSpace/commands for available <subcommand> options
+
+See each <subcommand> individual man page for <subcommand-options> and <subcommand-arguments>
+
+== Options
+
+-h, --help:: Print help
+
+include::util/man-footer.adoc[]

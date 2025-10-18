@@ -30,7 +30,7 @@ struct WindowDetectedCallbackMatcher: ConvenienceCopyable, Equatable {
     var appNameRegexSubstring: Regex<AnyRegexOutput>?
     var windowTitleRegexSubstring: Regex<AnyRegexOutput>?
     var workspace: String?
-    var duringAeroSpaceStartup: Bool?
+    var duringHyprSpaceStartup: Bool?
 
     var debugJson: Json {
         var resultParts: [String] = []
@@ -46,8 +46,8 @@ struct WindowDetectedCallbackMatcher: ConvenienceCopyable, Equatable {
         if let workspace {
             resultParts.append("workspace=\"\(workspace)\"")
         }
-        if let duringAeroSpaceStartup {
-            resultParts.append("duringAeroSpaceStartup=\(duringAeroSpaceStartup)")
+        if let duringHyprSpaceStartup {
+            resultParts.append("duringHyprSpaceStartup=\(duringHyprSpaceStartup)")
         }
         return .string(resultParts.joined(separator: ", "))
     }
@@ -74,7 +74,7 @@ private let matcherParsers: [String: any ParserProtocol<WindowDetectedCallbackMa
     "workspace": Parser(\.workspace, upcast(parseString)),
     "app-name-regex-substring": Parser(\.appNameRegexSubstring, upcast(parseCasInsensitiveRegex)),
     "window-title-regex-substring": Parser(\.windowTitleRegexSubstring, upcast(parseCasInsensitiveRegex)),
-    "during-aerospace-startup": Parser(\.duringAeroSpaceStartup, upcast(parseBool)),
+    "during-hyprspace-startup": Parser(\.duringHyprSpaceStartup, upcast(parseBool)),
 ]
 
 private func upcast<T>(_ fun: @escaping @Sendable (TOMLValueConvertible, TomlBacktrace) -> ParsedToml<T>) -> @Sendable (TOMLValueConvertible, TomlBacktrace) -> ParsedToml<T?> {
@@ -117,7 +117,7 @@ private func parseWindowDetectedCallback(_ raw: TOMLValueConvertible, _ backtrac
         myErrors.append(.semantic(
             backtrace,
             "For now, 'layout floating', 'layout tiling' and 'move-node-to-workspace' are the only commands that are supported in 'on-window-detected'. " +
-                "Please report your use cases to https://github.com/nikitabobko/AeroSpace/issues/20",
+                "Please report your use cases to https://github.com/nikitabobko/HyprSpace/issues/20",
         ))
     }
 
@@ -126,7 +126,7 @@ private func parseWindowDetectedCallback(_ raw: TOMLValueConvertible, _ backtrac
         myErrors.append(.semantic(
             backtrace,
             "For now, 'move-node-to-workspace' must be the latest instruction in the callback (otherwise it's error-prone). " +
-                "Please report your use cases to https://github.com/nikitabobko/AeroSpace/issues/20",
+                "Please report your use cases to https://github.com/nikitabobko/HyprSpace/issues/20",
         ))
     }
 
@@ -134,7 +134,7 @@ private func parseWindowDetectedCallback(_ raw: TOMLValueConvertible, _ backtrac
         myErrors.append(.semantic(
             backtrace,
             "For now, 'move-node-to-workspace' can be mentioned only once in 'run' callback. " +
-                "Please report your use cases to https://github.com/nikitabobko/AeroSpace/issues/20",
+                "Please report your use cases to https://github.com/nikitabobko/HyprSpace/issues/20",
         ))
     }
 

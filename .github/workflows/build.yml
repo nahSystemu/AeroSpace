@@ -53,7 +53,7 @@ jobs:
       - run: brew install bash fish xcbeautify
       - name: './build-release.sh'
         run: |
-          # "-" means "Sign to run locally". There is no aerospace-codesign-certificate on GH Actions
+          # "-" means "Sign to run locally". There is no hyprspace-codesign-certificate on GH Actions
           ./build-release.sh --codesign-identity -
           ./install-from-sources.sh --dont-rebuild
       - name: cat ./.release/xcodebuild.log

@@ -23,7 +23,7 @@ public func dieT<T>(
     let message =
         """
         Please report to:
-            https://github.com/nikitabobko/AeroSpace/discussions/categories/potential-bugs
+            https://github.com/nikitabobko/HyprSpace/discussions/categories/potential-bugs
             Please describe what you did to trigger this error
 
         Message: \(_message)
@@ -47,9 +47,9 @@ public func dieT<T>(
     if !isUnitTest && isServer {
         showMessageInGui(
             filenameIfConsoleApp: recursionDetectorDuringTermination
-                ? "aerospace-runtime-error-recursion.txt"
-                : "aerospace-runtime-error.txt",
-            title: "AeroSpace Runtime Error",
+                ? "hyprspace-runtime-error-recursion.txt"
+                : "hyprspace-runtime-error.txt",
+            title: "HyprSpace Runtime Error",
             message: message,
         )
     }

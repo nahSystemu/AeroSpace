@@ -40,7 +40,7 @@ struct ReloadConfigCommand: Command {
             stdout.append(msg)
             if !args.noGui {
                 Task { @MainActor in
-                    MessageModel.shared.message = Message(description: "AeroSpace Config Error", body: msg)
+                    MessageModel.shared.message = Message(description: "HyprSpace Config Error", body: msg)
                 }
             }
             return false

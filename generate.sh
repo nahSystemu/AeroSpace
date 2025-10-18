@@ -2,7 +2,7 @@
 cd "$(dirname "$0")"
 source ./script/setup.sh
 
-export XCODEGEN_AEROSPACE_CODE_SIGN_IDENTITY="aerospace-codesign-certificate"
+export XCODEGEN_HYPRSPACE_CODE_SIGN_IDENTITY="hyprspace-codesign-certificate"
 build_version="0.0.0-SNAPSHOT"
 generate_xcodeproj=1
 generate_cmd_help=1
@@ -11,7 +11,7 @@ all=0
 while test $# -gt 0; do
     case $1 in
         --build-version) build_version="$2"; shift 2 ;;
-        --codesign-identity) XCODEGEN_AEROSPACE_CODE_SIGN_IDENTITY="$2"; shift 2 ;;
+        --codesign-identity) XCODEGEN_HYPRSPACE_CODE_SIGN_IDENTITY="$2"; shift 2 ;;
         --generate-git-hash) generate_git_hash=1; shift 1;;
         --ignore-cmd-help) generate_cmd_help=0; shift 1 ;;
         --ignore-xcodeproj) generate_xcodeproj=0; shift 1 ;;
@@ -41,18 +41,18 @@ public let aeroSpaceAppVersion = "$build_version"
 EOF
 
 entries() {
-    for file in docs/aerospace-*.adoc; do
+    for file in docs/hyprspace-*.adoc; do
         if grep -q 'exec-and-forget' <<< $file; then
             continue
         fi
-        subcommand=$(basename $file | sed 's/^aerospace-//' | sed 's/\.adoc$//')
+        subcommand=$(basename $file | sed 's/^hyprspace-//' | sed 's/\.adoc$//')
         desc="$(grep :manpurpose: "$file" | sed -E 's/:manpurpose: //')"
         echo "    [\"  $subcommand\", \"$desc\"],"
     done
 }
 
 cat <<EOF > ./Sources/Cli/subcommandDescriptionsGenerated.swift
-// FILE IS GENERATED FROM docs/aerospace-*.adoc files
+// FILE IS GENERATED FROM docs/hyprspace-*.adoc files
 // TO REGENERATE THE FILE RUN generate.sh
 
 let subcommandDescriptions = [
@@ -67,7 +67,7 @@ public let gitShortHash = "$(if test $generate_git_hash = 0; then echo "SNAPSHOT
 EOF
 
 if test $generate_xcodeproj = 1; then
-    export XCODEGEN_AEROSPACE_VERSION=$build_version
+    export XCODEGEN_HYPRSPACE_VERSION=$build_version
     ./script/install-dep.sh --xcodegen
     ./.deps/xcodegen/xcodegen # https://github.com/yonaskolb/XcodeGen
 fi

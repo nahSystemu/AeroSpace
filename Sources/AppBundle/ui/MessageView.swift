@@ -3,11 +3,11 @@ import SwiftUI
 
 @MainActor
 public func getMessageWindow(messageModel: MessageModel) -> some Scene {
-    // Using SwiftUI.Window because another class in AeroSpace is already called Window
+    // Using SwiftUI.Window because another class in HyprSpace is already called Window
     SwiftUI.Window(messageModel.message?.title ?? aeroSpaceAppName, id: messageWindowId) {
         MessageView(model: messageModel)
             .onAppear {
-                // Set activation policy; otherwise, AeroSpace windows won't be able to receive focus and accept keyboard input
+                // Set activation policy; otherwise, HyprSpace windows won't be able to receive focus and accept keyboard input
                 NSApp.setActivationPolicy(.accessory)
                 NSApplication.shared.windows.forEach {
                     if $0.identifier?.rawValue == messageWindowId {
