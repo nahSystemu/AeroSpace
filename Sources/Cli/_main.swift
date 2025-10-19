@@ -64,7 +64,7 @@ struct Main {
                     ERROR: Implicit stdin is detected (stdin is not TTY). Implicit stdin was forbidden in HyprSpace v0.20.0.
                     1. Please supply '--stdin' flag to make stdin explicit and preserve old HyprSpace behavior
                     2. You can also use '--no-stdin' flag to behave as if no stdin was supplied
-                    Breaking change issue: https://github.com/nikitabobko/HyprSpace/issues/1683
+                    Breaking change issue: https://github.com/nahSystemu/HyprSpace/issues/1683
                     """,
                 )
             }

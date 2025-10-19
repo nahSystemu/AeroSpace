@@ -5,7 +5,7 @@ To build/install from sources do the following:
 2. Create codesign certificate in `Keychain Access.app`
 3. Run one of the entry point scripts to build/install from sources
 
-If you struggle to build HyprSpace locally, you can also refer to [builds in GitHub Actions](https://github.com/nikitabobko/HyprSpace/actions?query=branch%3Amain)
+If you struggle to build HyprSpace locally, you can also refer to [builds in GitHub Actions](https://github.com/nahSystemu/HyprSpace/actions?query=branch%3Amain)
 
 ## Definitions
 

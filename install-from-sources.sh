@@ -18,9 +18,9 @@ PATH="$PATH:$(brew --prefix)/bin"
 export PATH
 
 brew list hyprspace-dev-user/hyprspace-dev-tap/hyprspace-dev > /dev/null 2>&1 && brew uninstall hyprspace-dev-user/hyprspace-dev-tap/hyprspace-dev # Compatibility. Drop after a while
-brew list nikitabobko/local-tap/hyprspace-dev > /dev/null 2>&1 && brew uninstall nikitabobko/local-tap/hyprspace-dev
+brew list nahSystemu/local-tap/hyprspace-dev > /dev/null 2>&1 && brew uninstall nahSystemu/local-tap/hyprspace-dev
 brew list hyprspace > /dev/null 2>&1 && brew uninstall hyprspace
-which brew-install-path > /dev/null 2>&1 || brew install nikitabobko/tap/brew-install-path
+which brew-install-path > /dev/null 2>&1 || brew install nahSystemu/tap/brew-install-path
 
 # Override HOMEBREW_CACHE. Otherwise, homebrew refuses to "redownload" the snapshot file
 # Maybe there is a better way, I don't know

@@ -1,7 +1,7 @@
 ====
 HyprSpace is an i3-like tiling window manager for macOS
 
-*Project homepage*: https://github.com/nikitabobko/HyprSpace
+*Project homepage*: https://github.com/nahSystemu/HyprSpace
 
 image:assets/icon.png[300,300,float="right"]
 

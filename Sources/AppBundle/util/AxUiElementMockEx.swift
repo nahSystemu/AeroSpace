@@ -43,8 +43,8 @@ extension AxUiElementMock {
         // Fullscreen button is presented but disabled:
         // - Safari -> Pinterest -> Log in with Google
         // - Kap screen recorder https://github.com/wulkano/Kap
-        // - flameshot? https://github.com/nikitabobko/HyprSpace/issues/112
-        // - Drata Agent https://github.com/nikitabobko/HyprSpace/issues/134
+        // - flameshot? https://github.com/nahSystemu/HyprSpace/issues/112
+        // - Drata Agent https://github.com/nahSystemu/HyprSpace/issues/134
         if get(Ax.fullscreenButtonAttr)?.get(Ax.enabledAttr) != true &&
             id != .gimp && // Gimp doesn't show fullscreen button
             id != .activityMonitor && // Activity Monitor doesn't show fullscreen button
@@ -76,7 +76,7 @@ extension AxUiElementMock {
     ) -> Bool {
         // Just don't do anything with "Ghostty Quick Terminal" windows.
         // Its position and size are managed by the Ghostty itself
-        // https://github.com/nikitabobko/HyprSpace/issues/103
+        // https://github.com/nahSystemu/HyprSpace/issues/103
         // https://github.com/ghostty-org/ghostty/discussions/3512
         if id == .ghostty && get(Ax.identifierAttr) == "com.mitchellh.ghostty.quickTerminal" {
             return false
@@ -95,7 +95,7 @@ extension AxUiElementMock {
         // - Sonoma (macOS 14) keyboard layout switch (AXSubrole == AXDialog)
         // - IntelliJ context menu (right mouse click)
         // - Telegram context menu (right mouse click)
-        // - Share window purple "pill" indicator https://github.com/nikitabobko/HyprSpace/issues/1101. Title is not empty
+        // - Share window purple "pill" indicator https://github.com/nahSystemu/HyprSpace/issues/1101. Title is not empty
         // - Tooltips on links mouse hover in browsers (Chrome, Firefox)
         // - Tooltips on buttons (e.g. new tab, Extensions) mouse hover in browsers (Chrome, Firefox). Title is not empty
         // Make sure that the following AXWindow remain windows:
@@ -134,7 +134,7 @@ extension AxUiElementMock {
             axApp.get(Ax.focusedWindowAttr)?.windowId != containingWindowId() &&
 
             subrole != kAXStandardWindowSubrole &&
-            // Share window purple "pill" indicator has "Window" title https://github.com/nikitabobko/HyprSpace/issues/1101
+            // Share window purple "pill" indicator has "Window" title https://github.com/nahSystemu/HyprSpace/issues/1101
             (title.isEmpty || title == "Window") // Maybe it doesn't work in non-English locale
         {
             return false

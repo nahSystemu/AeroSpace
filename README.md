@@ -1,4 +1,4 @@
-# HyprSpace Beta [![Build](https://github.com/nikitabobko/HyprSpace/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/nikitabobko/HyprSpace/actions/workflows/build.yml)
+# HyprSpace Beta [![Build](https://github.com/nahSystemu/HyprSpace/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/nahSystemu/HyprSpace/actions/workflows/build.yml)
 
 <img src="./resources/Assets.xcassets/AppIcon.appiconset/icon.png" width="40%" align="right">
 
@@ -9,52 +9,52 @@ Videos:
 - [YouTube Guide by Josean Martinez](https://www.youtube.com/watch?v=-FoWClVHG5g)
 
 Docs:
-- [HyprSpace Guide](https://nikitabobko.github.io/HyprSpace/guide)
-- [HyprSpace Commands](https://nikitabobko.github.io/HyprSpace/commands)
-- [HyprSpace Goodies](https://nikitabobko.github.io/HyprSpace/goodies)
+- [HyprSpace Guide](https://nahSystemu.github.io/HyprSpace/guide)
+- [HyprSpace Commands](https://nahSystemu.github.io/HyprSpace/commands)
+- [HyprSpace Goodies](https://nahSystemu.github.io/HyprSpace/goodies)
 
 ## Project status
 
 Public Beta. HyprSpace can be used as a daily driver, but expect breaking changes until 1.0 is reached.
 
 What stops us from 1.0 release:
-- [x] https://github.com/nikitabobko/HyprSpace/issues/131 Performance. Implement thread-per-application to circumvent macOS blocking AX API.
-- [ ] https://github.com/nikitabobko/HyprSpace/issues/1215 _Big refactoring_. Rewrite mutable double-linked core tree data structure to immutable single-linked persistent tree.
+- [x] https://github.com/nahSystemu/HyprSpace/issues/131 Performance. Implement thread-per-application to circumvent macOS blocking AX API.
+- [ ] https://github.com/nahSystemu/HyprSpace/issues/1215 _Big refactoring_. Rewrite mutable double-linked core tree data structure to immutable single-linked persistent tree.
   Important for: stability and potential performance
-  - [ ] https://github.com/nikitabobko/HyprSpace/issues/1216 The big refactoring will help us to fix stability issue that windows may randomly jump to the focused workspace
-  - [ ] https://github.com/nikitabobko/HyprSpace/issues/68 The big refactoring will help us to support macOS native tabs
-- [ ] https://github.com/nikitabobko/HyprSpace/issues/278 Implement shell-like combinators.
+  - [ ] https://github.com/nahSystemu/HyprSpace/issues/1216 The big refactoring will help us to fix stability issue that windows may randomly jump to the focused workspace
+  - [ ] https://github.com/nahSystemu/HyprSpace/issues/68 The big refactoring will help us to support macOS native tabs
+- [ ] https://github.com/nahSystemu/HyprSpace/issues/278 Implement shell-like combinators.
   Ignore a lot of crazy fuss in the issue,
   We are most probably going with the minimal approach to only introduce common shell-combinators: `||`, `&&`, `;` and `eval` command to send multiple commands in one go.
-- [ ] https://github.com/nikitabobko/HyprSpace/issues/1012 Investigate a possibility to use `CGEvent.tapCreate` API for global hotkeys
-  - [ ] https://github.com/nikitabobko/HyprSpace/issues/28 Maybe it will allow to distinguish left and right modifiers. Maybe not
+- [ ] https://github.com/nahSystemu/HyprSpace/issues/1012 Investigate a possibility to use `CGEvent.tapCreate` API for global hotkeys
+  - [ ] https://github.com/nahSystemu/HyprSpace/issues/28 Maybe it will allow to distinguish left and right modifiers. Maybe not
 
 Big and important issues which will go after 1.0 release:
-- [ ] https://github.com/nikitabobko/HyprSpace/issues/2 sticky windows
-- [ ] https://github.com/nikitabobko/HyprSpace/issues/260 Dynamic TWM
+- [ ] https://github.com/nahSystemu/HyprSpace/issues/2 sticky windows
+- [ ] https://github.com/nahSystemu/HyprSpace/issues/260 Dynamic TWM
 
 ## Key features
 
-- Tiling window manager based on a [tree paradigm](https://nikitabobko.github.io/HyprSpace/guide#tree)
+- Tiling window manager based on a [tree paradigm](https://nahSystemu.github.io/HyprSpace/guide#tree)
 - [i3](https://i3wm.org/) inspired
 - Fast workspaces switching without animations and without the necessity to disable SIP
-- HyprSpace employs its [own emulation of virtual workspaces](https://nikitabobko.github.io/HyprSpace/guide#emulation-of-virtual-workspaces) instead of relying on native macOS Spaces due to [their considerable limitations](https://nikitabobko.github.io/HyprSpace/guide#emulation-of-virtual-workspaces)
-- Plain text configuration (dotfiles friendly). See: [default-config.toml](https://nikitabobko.github.io/HyprSpace/guide#default-config)
+- HyprSpace employs its [own emulation of virtual workspaces](https://nahSystemu.github.io/HyprSpace/guide#emulation-of-virtual-workspaces) instead of relying on native macOS Spaces due to [their considerable limitations](https://nahSystemu.github.io/HyprSpace/guide#emulation-of-virtual-workspaces)
+- Plain text configuration (dotfiles friendly). See: [default-config.toml](https://nahSystemu.github.io/HyprSpace/guide#default-config)
 - CLI first (manpages and shell completion included)
 - Doesn't require disabling SIP (System Integrity Protection)
-- [Proper multi-monitor support](https://nikitabobko.github.io/HyprSpace/guide#multiple-monitors) (i3-like paradigm)
+- [Proper multi-monitor support](https://nahSystemu.github.io/HyprSpace/guide#multiple-monitors) (i3-like paradigm)
 
 ## Installation
 
 Install via [Homebrew](https://brew.sh/) to get autoupdates (Preferred)
 
 ```
-brew install --cask nikitabobko/tap/hyprspace
+brew install --cask nahSystemu/tap/hyprspace
 ```
 
-In multi-monitor setup please make sure that monitors [are properly arranged](https://nikitabobko.github.io/HyprSpace/guide#proper-monitor-arrangement).
+In multi-monitor setup please make sure that monitors [are properly arranged](https://nahSystemu.github.io/HyprSpace/guide#proper-monitor-arrangement).
 
-Other installation options: https://nikitabobko.github.io/HyprSpace/guide#installation
+Other installation options: https://nahSystemu.github.io/HyprSpace/guide#installation
 
 > [!NOTE]
 > By using HyprSpace, you acknowledge that it's not [notarized](https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution).
@@ -67,39 +67,39 @@ Other installation options: https://nikitabobko.github.io/HyprSpace/guide#instal
 > I specifically don't like the way Apple does notarization.
 > I don't have time to deal with Apple.
 >
-> [Homebrew installation script](https://github.com/nikitabobko/homebrew-tap/blob/main/Casks/hyprspace.rb) is configured to
+> [Homebrew installation script](https://github.com/nahSystemu/homebrew-tap/blob/main/Casks/hyprspace.rb) is configured to
 > automatically delete `com.apple.quarantine` attribute, that's why the app should work out of the box, without any warnings that
 > "Apple cannot check HyprSpace for malicious software"
 
 ## Community, discussions, issues
 
-HyprSpace project doesn't accept Issues directly - we ask you to create a [Discussion](https://github.com/nikitabobko/HyprSpace/discussions) first.
+HyprSpace project doesn't accept Issues directly - we ask you to create a [Discussion](https://github.com/nahSystemu/HyprSpace/discussions) first.
 Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for more details.
 
 Community discussions happen at GitHub Discussions.
 There you can discuss bugs, propose new features, ask your questions, show off your setup, or just chat.
 
 There are 7 channels:
--   [#all](https://github.com/nikitabobko/HyprSpace/discussions).
-    [RSS](https://github.com/nikitabobko/HyprSpace/discussions.atom?discussions_q=sort%3Adate_created).
+-   [#all](https://github.com/nahSystemu/HyprSpace/discussions).
+    [RSS](https://github.com/nahSystemu/HyprSpace/discussions.atom?discussions_q=sort%3Adate_created).
     Feed with all discussions.
--   [#announcements](https://github.com/nikitabobko/HyprSpace/discussions/categories/announcements).
-    [RSS](https://github.com/nikitabobko/HyprSpace/discussions/categories/announcements.atom?discussions_q=category%3Aannouncements+sort%3Adate_created).
+-   [#announcements](https://github.com/nahSystemu/HyprSpace/discussions/categories/announcements).
+    [RSS](https://github.com/nahSystemu/HyprSpace/discussions/categories/announcements.atom?discussions_q=category%3Aannouncements+sort%3Adate_created).
     Only maintainers can post here.
     Highly moderated traffic.
--   [#announcements-releases](https://github.com/nikitabobko/HyprSpace/discussions/categories/announcements-releases).
-    [RSS](https://github.com/nikitabobko/HyprSpace/discussions/categories/announcements-releases.atom?discussions_q=category%3Aannouncements-releases+sort%3Adate_created).
+-   [#announcements-releases](https://github.com/nahSystemu/HyprSpace/discussions/categories/announcements-releases).
+    [RSS](https://github.com/nahSystemu/HyprSpace/discussions/categories/announcements-releases.atom?discussions_q=category%3Aannouncements-releases+sort%3Adate_created).
     Announcements about non-patch releases.
     Only maintainers can post here.
--   [#feature-ideas](https://github.com/nikitabobko/HyprSpace/discussions/categories/feature-ideas).
-    [RSS](https://github.com/nikitabobko/HyprSpace/discussions/categories/feature-ideas.atom?discussions_q=category%3Afeature-ideas+sort%3Adate_created).
--   [#general](https://github.com/nikitabobko/HyprSpace/discussions/categories/general).
-    [RSS](https://github.com/nikitabobko/HyprSpace/discussions/categories/general.atom?discussions_q=sort%3Adate_created+category%3Ageneral).
--   [#potential-bugs](https://github.com/nikitabobko/HyprSpace/discussions/categories/potential-bugs).
-    [RSS](https://github.com/nikitabobko/HyprSpace/discussions/categories/potential-bugs.atom?discussions_q=category%3Apotential-bugs+sort%3Adate_created).
+-   [#feature-ideas](https://github.com/nahSystemu/HyprSpace/discussions/categories/feature-ideas).
+    [RSS](https://github.com/nahSystemu/HyprSpace/discussions/categories/feature-ideas.atom?discussions_q=category%3Afeature-ideas+sort%3Adate_created).
+-   [#general](https://github.com/nahSystemu/HyprSpace/discussions/categories/general).
+    [RSS](https://github.com/nahSystemu/HyprSpace/discussions/categories/general.atom?discussions_q=sort%3Adate_created+category%3Ageneral).
+-   [#potential-bugs](https://github.com/nahSystemu/HyprSpace/discussions/categories/potential-bugs).
+    [RSS](https://github.com/nahSystemu/HyprSpace/discussions/categories/potential-bugs.atom?discussions_q=category%3Apotential-bugs+sort%3Adate_created).
     If you think that you have encountered a bug, you can discuss your bugs here.
--   [#questions-and-answers](https://github.com/nikitabobko/HyprSpace/discussions/categories/questions-and-answers).
-    [RSS](https://github.com/nikitabobko/HyprSpace/discussions/categories/questions-and-answers.atom?discussions_q=category%3Aquestions-and-answers+sort%3Adate_created).
+-   [#questions-and-answers](https://github.com/nahSystemu/HyprSpace/discussions/categories/questions-and-answers).
+    [RSS](https://github.com/nahSystemu/HyprSpace/discussions/categories/questions-and-answers.atom?discussions_q=category%3Aquestions-and-answers+sort%3Adate_created).
     Everyone is welcome to ask questions.
     Everyone is encouraged to answer other people's questions.
 
@@ -129,7 +129,7 @@ A notes on how to setup the project, build it, how to run the tests, etc. can be
 **Non Values**
 - Play nicely with existing macOS features.
   If limitations are imposed then HyprSpace won't play nicely with existing macOS features
-  (For example, HyprSpace doesn't acknowledge the existence of macOS Spaces, and it uses [emulation of its own workspaces](https://nikitabobko.github.io/HyprSpace/guide#emulation-of-virtual-workspaces))
+  (For example, HyprSpace doesn't acknowledge the existence of macOS Spaces, and it uses [emulation of its own workspaces](https://nahSystemu.github.io/HyprSpace/guide#emulation-of-virtual-workspaces))
 - Ricing.
   HyprSpace provides only a very minimal support for ricing - gaps and a few callbacks for integrations with bars.
   The current maintainer doesn't care about ricing.
@@ -147,14 +147,14 @@ A notes on how to setup the project, build it, how to run the tests, etc. can be
 ## Sponsorship
 
 HyprSpace is developed and maintained in my free time.
-If you find it useful, [consider sponsoring](https://github.com/sponsors/nikitabobko#sponsors).
+If you find it useful, [consider sponsoring](https://github.com/sponsors/nahSystemu#sponsors).
 
 ## People who have write access
 
 In alphabetical order:
 
 - [@mobile-ar](https://github.com/mobile-ar/)
-- [@nikitabobko](https://github.com/nikitabobko/)
+- [@nahSystemu](https://github.com/nahSystemu/)
 
 ## Tip of the day
 

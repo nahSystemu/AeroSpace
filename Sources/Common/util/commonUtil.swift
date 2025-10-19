@@ -23,7 +23,7 @@ public func dieT<T>(
     let message =
         """
         Please report to:
-            https://github.com/nikitabobko/HyprSpace/discussions/categories/potential-bugs
+            https://github.com/nahSystemu/HyprSpace/discussions/categories/potential-bugs
             Please describe what you did to trigger this error
 
         Message: \(_message)

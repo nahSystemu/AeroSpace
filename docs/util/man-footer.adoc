@@ -1,13 +1,13 @@
 == Resources
 
-*Project homepage:* https://github.com/nikitabobko/HyprSpace +
-*Guide:* https://nikitabobko.github.io/HyprSpace/guide +
+*Project homepage:* https://github.com/nahSystemu/HyprSpace +
+*Guide:* https://nahSystemu.github.io/HyprSpace/guide +
 
 == BUGS
 
-Bugs can be reported to https://github.com/nikitabobko/HyprSpace/discussions/categories/potential-bugs
+Bugs can be reported to https://github.com/nahSystemu/HyprSpace/discussions/categories/potential-bugs
 
-Maintainers will move verified bugs to https://github.com/nikitabobko/HyprSpace/issues
+Maintainers will move verified bugs to https://github.com/nahSystemu/HyprSpace/issues
 
 == License
 

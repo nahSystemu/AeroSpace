@@ -32,8 +32,8 @@ fi
 ./run-tests.sh
 ./build-release.sh --build-version "$build_version"
 
-git tag -a "v$build_version" -m "v$build_version" && git push git@github.com:nikitabobko/HyprSpace.git "v$build_version"
-link="https://github.com/nikitabobko/HyprSpace/releases/new?tag=v$build_version"
+git tag -a "v$build_version" -m "v$build_version" && git push git@github.com:nahSystemu/HyprSpace.git "v$build_version"
+link="https://github.com/nahSystemu/HyprSpace/releases/new?tag=v$build_version"
 open "$link" || { echo "$link"; exit 1; }
 sleep 1
 open -R "./.release/HyprSpace-v$build_version.zip"
@@ -43,7 +43,7 @@ read -r
 
 ./script/build-brew-cask.sh \
     --cask-name hyprspace \
-    --zip-uri "https://github.com/nikitabobko/HyprSpace/releases/download/v$build_version/HyprSpace-v$build_version.zip" \
+    --zip-uri "https://github.com/nahSystemu/HyprSpace/releases/download/v$build_version/HyprSpace-v$build_version.zip" \
     --build-version "$build_version"
 
 eval "$cask_git_repo_path/pin.sh"
